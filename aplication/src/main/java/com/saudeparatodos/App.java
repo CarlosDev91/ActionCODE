@@ -5,56 +5,60 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String[] comandos = {
-                "Comandos Disponiveis ",
-                "1-Help     retorna comandos disponiveis",
-                "2-Perfil/Conta     retorna area do seu perfil e dados da suaconta",
-                "3-Acount/Login     retorna vc para area de conta e login",
-                "4-Agendamentos     retorna vc para area medica de exames, consultas e operaçoes medicas ja marcadas",
-                "5-Calendario       retorna vc para seu calendario de eventos ja marcados no app"
-        };
-         //exibe um ecra na cor vermelha para o menu de comados
-        System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
-       
-        // Exibir os comandos disponíveis
-        for (String comando : comandos) {
-            System.out.println(comando);
-        }
+        Boolean sair = false;
+        
+        while (!sair) {
+        System.out.print("Digite o número do comando desejado (ou 'help' para ver os comandos disponíveis): ");
+        String opcao = sc.nextLine();
 
-        // Capturar a entrada do usuário para escolher um comando
-        System.out.println("Digite o número do comando desejado: ");
-
-        //exibe um ecra na cor vermelha para o menu de comados  
-        System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
-
-        int opcaoEscolhida = sc.nextInt();
-
-        switch (opcaoEscolhida) {
-            case 1:
+      
+        switch (opcao.toLowerCase()) {
+            case "help":
                 help(); // Chama o método para o comando 1
                 break;
-            case 2:
+            case "2":
                 perfilConta(); // Chama o método para o comando 2
                 break;
-            case 3:
+            case "3":
                 accountLogin(); // Chama o método para o comando 3
                 break;
-            case 4:
+            case "4":
                 agendamentos(); // Chama o método para o comando 4
                 break;
-            case 5:
+            case "5":
                 calendario(); // Chama o método para o comando 5
                 break;
+            case "sair":
+                sair = true; // sair da opçao selecionada
+                break;
             default:
-                System.out.println("Comando invalido");
+                System.out.println("Comando inválido");
         }
 
     }
+}
 
     // Métodos para cada comando
     public static void help() {
-        System.out.println("Comandos disponiveis:");
-        // Lógica para exibir comandos disponíveis
+     
+        String[] comandos = {
+            "Comandos Disponiveis ",
+            "1-Help     retorna comandos disponiveis",
+            "2-Perfil/Conta     retorna area do seu perfil e dados da suaconta",
+            "3-Acount/Login     retorna vc para area de conta e login",
+            "4-Agendamentos     retorna vc para area medica de exames, consultas e operaçoes medicas ja marcadas",
+            "5-Calendario       retorna vc para seu calendario de eventos ja marcados no app"
+    };
+     //exibe um ecra na cor vermelha para o menu de comados
+     System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
+   
+    // Exibir os comandos disponíveis
+    for (String comando : comandos) {
+        System.out.println(comando);
+    }
+     //exibe um ecra na cor vermelha para o menu de comados  
+     System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
+
     }
 
     public static void perfilConta() {
