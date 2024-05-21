@@ -1,85 +1,105 @@
-package  com.saudeparatodos;
-import java.util.*;
+package com.saudeparatodos;
+
+import java.util.Scanner;
 
 public class App {
+    private static Usuario usuario = null;
+    private static boolean loggedIn = false;
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        Boolean sair = false;
-        
-        while (!sair) {
-        System.out.print("Digite o número do comando desejado (ou 'help' para ver os comandos disponíveis): ");
-        String opcao = sc.nextLine();
+        System.out.println("Bem-vindo ao SUTD");
 
-      
-        switch (opcao.toLowerCase()) {
-            case "help":
-                help(); // Chama o método para o comando 1
-                break;
-            case "2":
-                perfilConta(); // Chama o método para o comando 2
-                break;
-            case "3":
-                accountLogin(); // Chama o método para o comando 3
-                break;
-            case "4":
-                agendamentos(); // Chama o método para o comando 4
-                break;
-            case "5":
-                calendario(); // Chama o método para o comando 5
-                break;
-            case "sair":
-                sair = true; // sair da opçao selecionada
-                break;
-            default:
-                System.out.println("Comando inválido");
+        while (!loggedIn) {
+            System.out.println("Digite 'Cadastrar' para criar uma nova conta ou 'Login' para acessar sua conta:");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("Cadastrar")) {
+                Cadastro.cadastrarUsuario(scanner);
+            } else if (input.equalsIgnoreCase("Login")) {
+                usuario = Login.fazerLogin(scanner);
+                if (usuario != null) {
+                    loggedIn = true;
+                } else {
+                    System.out.println("Email ou senha inválidos. Por favor, tente novamente.");
+                }
+            } else {
+                System.out.println("Comando inválido. Por favor, tente novamente.");
+            }
         }
 
+        System.out.println("Login bem-sucedido! Bem-vindo, " + usuario.getNome());
+
+        boolean running = true;
+        while (running) {
+            System.out.println("Escolha uma opção: \nPerfil \nHelp \nSair");
+            String option = scanner.nextLine();
+
+            switch (option.toLowerCase()) {
+                case "help" -> Help();
+                case "perfil" -> Perfil(scanner);
+                case "login" -> Login();
+                case "agenda" -> Agendamentos();
+                case "calendario" -> Calendario();
+                case "sair" -> running = false;
+                default -> System.out.println("Comando inválido");
+            }
+        }
+
+        scanner.close();
+        ConexaoBD.fecharConexao();
+    }
+
+    public static void Perfil(Scanner scanner) {
+        boolean viewingProfile = true;
+
+        while (viewingProfile) {
+            System.out.println("Perfil do usuário:");
+            System.out.println("Nome: " + usuario.getNome());
+            System.out.println("Email: " + usuario.getEmail());
+            System.out.println("Idade: " + usuario.getIdade());
+            System.out.println("Sexo: " + usuario.getSexo());
+            System.out.println("Endereço: " + usuario.getEndereco());
+            System.out.println("Telefone: " + usuario.getTelefone());
+            System.out.println("CPF: " + usuario.getCpf());
+            System.out.println("SUS: " + usuario.getSus());
+
+            System.out.println("\nEscolha uma opção: \n1. Voltar \n2. Editar Perfil");
+            String option = scanner.nextLine();
+
+            switch (option) {
+                case "1":
+                    viewingProfile = false;
+                    break;
+                case "2":
+                    editarPerfil(scanner);
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, tente novamente.");
+            }
+        }
+    }
+
+    public static void editarPerfil(Scanner scanner) {
+        System.out.println("Editar perfil do usuário");
+        Cadastro.cadastrarUsuario(scanner);
+        System.out.println("Perfil atualizado com sucesso.");
+    }
+
+    public static void Help() {
+        // Implementação do método Help
+    }
+
+    public static void Login() {
+        // Implementação do método Login
+    }
+
+    public static void Agendamentos() {
+        // Implementação do método Agendamentos
+    }
+
+    public static void Calendario() {
+        // Implementação do método Calendario
     }
 }
-
-    // Métodos para cada comando
-    public static void help() {
-     
-        String[] comandos = {
-            "Comandos Disponiveis ",
-            "1-Help     retorna comandos disponiveis",
-            "2-Perfil/Conta     retorna area do seu perfil e dados da suaconta",
-            "3-Acount/Login     retorna vc para area de conta e login",
-            "4-Agendamentos     retorna vc para area medica de exames, consultas e operaçoes medicas ja marcadas",
-            "5-Calendario       retorna vc para seu calendario de eventos ja marcados no app"
-    };
-     //exibe um ecra na cor vermelha para o menu de comados
-     System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
-   
-    // Exibir os comandos disponíveis
-    for (String comando : comandos) {
-        System.out.println(comando);
-    }
-     //exibe um ecra na cor vermelha para o menu de comados  
-     System.out.println("\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c"+ "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" +"\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c" + "\u274c");
-
-    }
-
-    public static void perfilConta() {
-        System.out.println("Area do perfil e dados da conta:");
-        // Lógica para exibir dados do perfil/conta
-    }
-
-    public static void accountLogin() {
-        System.out.println("Area de conta e login:");
-        // Lógica para área de conta/login
-    }
-
-    public static void agendamentos() {
-        System.out.println("Area medica de agendamentos:");
-        // Lógica para área de agendamentos médicos
-    }
-
-    public static void calendario() {
-        System.out.println("Calendario de eventos:");
-        // Lógica para exibir calendário de eventos
-    }
-
-}
-
