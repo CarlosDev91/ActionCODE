@@ -8,7 +8,7 @@
 
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Welcome to Pojeto Saúde Para Todos (SUTD), a project created by the UPX group (Experimental Projects Plant)
 
 ## Folder Structure
 
