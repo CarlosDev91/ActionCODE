@@ -1,4 +1,4 @@
-package com.saudeparatodos;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ public class ConexaoBD {
     private static final String URL = "jdbc:mysql://localhost:3306/chc";
     private static final String USUARIO = "root";
     private static final String SENHA = "l#%WbVDFT$j3";
-    private static Connection conexao = null;
+    private static Connection conexao;
 
     public static Connection obterConexao() {
         try {

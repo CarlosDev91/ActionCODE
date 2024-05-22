@@ -1,105 +1,105 @@
-package com.saudeparatodos;
+package DAO;
 
-public class Usuario {
-    private int id;
-    private String nome;
-    private String email;
-    private String senha;
-    private String idade;
-    private String sexo;
-    private String endereço;
-    private String telefone;
-    private String cpf;
-    private String sus;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import Model.Usuario;
 
+public class UsuarioDAO {
 
-    public Usuario(String nome, String email, String senha, String idade, String sexo, String endereco, String telefone, String cpf, String sus) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.idade = idade;
-        this.sexo = sexo;
-        this.endereço = endereco;
-        this.telefone = telefone;
-        this.cpf = cpf;
-        this.sus = sus;
+    private Connection connection;
+
+    public UsuarioDAO(Connection connection) {
+        this.connection = connection;
     }
 
-    public int getId() {
-        return id;
+    public void adicionarUsuario(Usuario usuario) throws SQLException {
+        String sql = "INSERT INTO usuario (nome, email, senha, idade, sexo, endereco, telefone, cpf, sus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());
+            stmt.setString(3, usuario.getSenha());
+            stmt.setString(4, usuario.getIdade());
+            stmt.setString(5, usuario.getSexo());
+            stmt.setString(6, usuario.getEndereco());
+            stmt.setString(7, usuario.getTelefone());
+            stmt.setString(8, usuario.getCpf());
+            stmt.setString(9, usuario.getSus());
+            stmt.executeUpdate();
+        }
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Usuario buscarUsuarioPorId(int id) throws SQLException {
+        String sql = "SELECT * FROM usuario WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Usuario(
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getString("idade"), 
+                        rs.getString("sexo"),
+                        rs.getString("endereco"),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("sus")
+                    );
+                }
+            }
+        }
+        return null;
     }
 
-    public String getNome() {
-        return nome;
+    public List<Usuario> listarUsuarios() throws SQLException {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM usuario";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Usuario usuario = new Usuario(
+                    rs.getString("nome"),
+                    rs.getString("email"),
+                    rs.getString("senha"),
+                    rs.getString("idade"), 
+                    rs.getString("sexo"),
+                    rs.getString("endereco"),
+                    rs.getString("telefone"),
+                    rs.getString("cpf"),
+                    rs.getString("sus")
+                );
+                usuarios.add(usuario);
+            }
+        }
+        return usuarios;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void atualizarUsuario(Usuario usuario) throws SQLException {
+        String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ?, idade = ?, sexo = ?, endereco = ?, telefone = ?, cpf = ?, sus = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());
+            stmt.setString(3, usuario.getSenha());
+            stmt.setString(4, usuario.getIdade());
+            stmt.setString(5, usuario.getSexo());
+            stmt.setString(6, usuario.getEndereco());
+            stmt.setString(7, usuario.getTelefone());
+            stmt.setString(8, usuario.getCpf());
+            stmt.setString(9, usuario.getSus());
+            stmt.setInt(10, usuario.getId());
+            stmt.executeUpdate();
+        }
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getIdade() {
-        return idade;
-    
-    }
-    public void  setIdade(String idade){
-        this.idade = idade;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-    public String getEndereco() {
-        return endereço;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereço = endereco;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getSus() {
-        return sus;
-    }
-
-    public void setSus(String sus) {
-        this.sus = sus;
+    public void deletarUsuario(int id) throws SQLException {
+        String sql = "DELETE FROM usuario WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
     }
 }

@@ -1,5 +1,5 @@
-package com.saudeparatodos;
+package DAO;
 
-public class Calendario {
+public class CalendarioDAO {
     
 }

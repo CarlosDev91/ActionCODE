@@ -1,11 +1,10 @@
-package com.saudeparatodos;
-
+package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Cadastro {
+public class CadastroDAO {
 
     public static void cadastrarUsuario(Scanner scanner) {
         System.out.println("Cadastro usuário");
