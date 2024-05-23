@@ -1,5 +1,7 @@
 package Model;
+import DAO.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Usuario {
     private int id;
@@ -8,7 +10,7 @@ public class Usuario {
     private String senha;
     private String idade;
     private String sexo;
-    private String endereço;
+    private String endereco;
     private String telefone;
     private String cpf;
     private String sus;
@@ -20,10 +22,14 @@ public class Usuario {
         this.senha = senha;
         this.idade = idade;
         this.sexo = sexo;
-        this.endereço = endereco;
+        this.endereco = endereco;
         this.telefone = telefone;
         this.cpf = cpf;
         this.sus = sus;
+    }
+
+    public Usuario() {
+        //TODO Auto-generated constructor stub
     }
 
     public int getId() {
@@ -73,11 +79,11 @@ public class Usuario {
         this.sexo = sexo;
     }
     public String getEndereco() {
-        return endereço;
+        return endereco;
     }
 
     public void setEndereco(String endereco) {
-        this.endereço = endereco;
+        this.endereco = endereco;
     }
 
     public String getTelefone() {
