@@ -19,24 +19,25 @@ public class App {
             String input = scanner.nextLine();
 
             if (input.equalsIgnoreCase("Cadastrar")) {
-                CadastroDAO.cadastrarUsuario(scanner);
+                UsuarioDAO.cadastrarUsuario(scanner);
             } else if (input.equalsIgnoreCase("Login")) {
                 usuario = LoginDAO.fazerLogin(scanner);
                 if (usuario != null) {
                     loggedIn = true;
                 } else {
-                    System.out.println("Email ou senha inválidos. Por favor, tente novamente.");
+                    System.out.println("Login ou senha inválidos. Por favor, tente novamente.");
                 }
             } else {
                 System.out.println("Comando inválido. Por favor, tente novamente.");
             }
         }
-
+        
         System.out.println("Login bem-sucedido! Bem-vindo, " + usuario.getNome());
-
+        ClearConsole.clear();
         boolean running = true;
         while (running) {
-            System.out.println("Escolha uma opção: \nPerfil \nHelp \nSair \nAgenda \nCalendario");
+            ClearConsole.clear();
+            System.out.println("Escannerolha uma opção: \nPerfil \nHelp \nAgendamento \nCalendario \nSair");
             String option = scanner.nextLine();
 
             switch (option.toLowerCase()) {
@@ -46,7 +47,7 @@ public class App {
                 case "perfil":
                     Perfil(scanner);
                     break;
-                case "agenda":
+                case "agendamento":
                     Agendamentos(scanner);
                     break;
                 case "calendario":
@@ -78,7 +79,7 @@ public class App {
             System.out.println("CPF: " + usuario.getCpf());
             System.out.println("SUS: " + usuario.getSus());
 
-            System.out.println("\nEscolha uma opção: \n1. Voltar \n2. Editar Perfil");
+            System.out.println("\nEscolha uma opção: \n1. Voltar \n2. Editar Perfil \n3. Excluir seu Perfil \n4. Ver consultas");
             String option = scanner.nextLine();
 
             switch (option) {
@@ -86,59 +87,72 @@ public class App {
                     viewingProfile = false;
                     break;
                 case "2":
-                    editarPerfil(scanner);
+                    Perfil.editarPerfil(scanner);
                     break;
+                case "3":
+
                 default:
                     System.out.println("Opção inválida. Por favor, tente novamente.");
             }
         }
     }
 
-    public static void editarPerfil(Scanner scanner) {
-        System.out.println("Editar Perfil:");
-        
-        System.out.print("Novo Nome: ");
-        usuario.setNome(scanner.nextLine());
+    public class Perfil {
 
-        System.out.print("Novo Email: ");
-        usuario.setEmail(scanner.nextLine());
-
-        System.out.print("Nova Senha: ");
-        usuario.setSenha(scanner.nextLine());
-
-        System.out.print("Nova Idade: ");
-        usuario.setIdade(scanner.nextLine());
-
-        System.out.print("Novo Sexo: ");
-        usuario.setSexo(scanner.nextLine());
-
-        System.out.print("Novo Endereço: ");
-        usuario.setEndereco(scanner.nextLine());
-
-        System.out.print("Novo Telefone: ");
-        usuario.setTelefone(scanner.nextLine());
-
-        System.out.print("Novo CPF: ");
-        usuario.setCpf(scanner.nextLine());
-
-        System.out.print("Novo SUS: ");
-        usuario.setSus(scanner.nextLine());
-
-        UsuarioDAO usuarioDAO = new UsuarioDAO(ConexaoBD.obterConexao());
-        try {
-            usuarioDAO.atualizarUsuario(usuario);
-            System.out.println("Perfil atualizado com sucesso!");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Erro ao atualizar perfil.");
+        public static void editarPerfil(Scanner scanner) {
+            // Criação do objeto Usuario
+            usuario.getId();
+            usuario.setId(Integer.parseInt(scanner.nextLine())); 
+            if(!loggedIn) {
+            System.out.println("Editar Perfil:");
+    
+            System.out.print("Novo Nome: ");
+            usuario.setNome(scanner.nextLine());
+    
+            System.out.print("Novo Email: ");
+            usuario.setEmail(scanner.nextLine());
+    
+            System.out.print("Nova Senha: ");
+            usuario.setSenha(scanner.nextLine());
+    
+            System.out.print("Nova Idade: ");
+            usuario.setIdade(scanner.nextLine());
+    
+            System.out.print("Novo Sexo: ");
+            usuario.setSexo(scanner.nextLine());
+    
+            System.out.print("Novo Endereço: ");
+            usuario.setEndereco(scanner.nextLine());
+    
+            System.out.print("Novo Telefone: ");
+            usuario.setTelefone(scanner.nextLine());
+    
+            System.out.print("Novo CPF: ");
+            usuario.setCpf(scanner.nextLine());
+    
+            System.out.print("Novo SUS: ");
+            usuario.setSus(scanner.nextLine());
+            }
+            // Verifique se o ID do usuário é válido e definido
+            // System.out.print("ID do Usuário: ");
+            //
+    
+            // Obtenção da conexão com o banco de dados
+            try (Connection connection = ConexaoBD.obterConexao()) {
+                UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+                usuarioDAO.atualizarUsuario(usuario);
+                System.out.println("Perfil atualizado com sucesso!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Erro ao atualizar perfil.");
+            }
         }
     }
-
     public static void Help() {
         System.out.println("Comandos disponíveis:");
         System.out.println("Perfil - Ver ou editar seu perfil");
         System.out.println("Help - Ver esta mensagem de ajuda");
-        System.out.println("Agenda - Gerenciar seus agendamentos");
+        System.out.println("Agenda - Gerenciar ou Realizar seus agendamentos");
         System.out.println("Calendario - Ver o calendário de especialidades");
         System.out.println("Sair - Sair do sistema");
     }
@@ -154,4 +168,6 @@ public class App {
         System.out.println("Aqui você pode ver o calendário de especialidades.");
         // Adicione mais lógica para visualizar o calendário.
     }
+
+
 }
